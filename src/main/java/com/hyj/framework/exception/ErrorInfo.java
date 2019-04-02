@@ -12,6 +12,10 @@ public enum ErrorInfo {
     PARAMS_ERROR(10003, "参数错误"),
     SERVER_ERROR(10004, "程序内部错误"),
 
+    EXCEL_EMPTY_ERR(20020,"Excel数据为空"),
+    PARSE_TIME_ERROR(20002,"解析时间出错"),
+    SYS_ERR(401,"程序内部错误"),
+
     ;
 
 
