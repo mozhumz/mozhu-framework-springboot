@@ -29,6 +29,8 @@ public class DemoController {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private IDemoService demoService;
+    @Resource
+    private AopTest aopTest;
 
     @ApiOperation(value = "获取用户")
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -45,9 +47,9 @@ public class DemoController {
     @ApiOperation(value = "添加")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestBody City city) {
-        demoService.saveCity(city);
 
-        return new ResData(null);
+
+        return new ResData(demoService.saveCity(city));
     }
 
     @ApiOperation(value = "删除")
@@ -68,18 +70,25 @@ public class DemoController {
 
     @ApiOperation(value = "查询")
     @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public Object find(Long id) {
-        System.out.println(demoService.findCityById(id));
+    public Object find(String id) {
+        System.out.println("haha");
 
-        return new ResData(null);
+        return new ResData(demoService.findCityById(id));
     }
 
 
     @ApiOperation(value = "查询")
-    @RequestMapping(value = "/find2", method = RequestMethod.GET)
-    public Object find2() {
-        System.out.println();
+    @RequestMapping(value = "/findByName", method = RequestMethod.GET)
+    public Object findByName(String name) {
 
-        throw new BaseException();
+
+        return new ResData(demoService.findCityByName(name));
+    }
+
+    @ApiOperation(value = "查询")
+    @RequestMapping(value = "/testAop", method = RequestMethod.GET)
+    public Object testAop() {
+        aopTest.testDemo("testDemo");
+        return new ResData(null);
     }
 }

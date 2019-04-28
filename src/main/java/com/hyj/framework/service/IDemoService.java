@@ -7,11 +7,15 @@ import com.hyj.framework.model.po.City;
  * @date 2019/4/2 17:11
  */
 public interface IDemoService {
-    City findCityById(Long id);
+    City findCityById(String id);
 
-    void saveCity(City city);
 
-    void updateCity(City city);
+
+    City saveCity(City city);
+
+    City findCityByName(String name);
+
+    City updateCity(City city);
 
     void deleteCity(Long id);
 }

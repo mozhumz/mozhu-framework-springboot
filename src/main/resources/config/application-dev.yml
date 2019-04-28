@@ -16,11 +16,11 @@ spring:
     time-zone: GMT+8
   interceptor:
     enabled: false
-  fastdfs:
-    enabled: true
-    config: config/fastdfs.properties
-    file_server_addr: "vcv"
-    max-file-size: 10485760
+#  fastdfs:
+#    enabled: true
+#    config: config/fastdfs.properties
+#    file_server_addr: "vcv"
+#    max-file-size: 10485760
   session:
     store-type: none
 #  redis配置
@@ -38,10 +38,10 @@ spring:
   #数据库
   datasource:
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/hyj?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/hyj?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
       username: root
       password: 123456
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       #配置双数据源后，当连接池空闲时间超过8小时，数据库连接就会自动断掉，为了避免这种情况,增加配置
       time-between-eviction-runs-millis: 18800
       max-active: 10
@@ -80,4 +80,4 @@ spring:
 #  mapper-locations: classpath:mapper/*.xml
 
 file:
-  path: ./develop/temp
+  path: ./temp

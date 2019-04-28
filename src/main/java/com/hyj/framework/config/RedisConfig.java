@@ -11,12 +11,17 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
+
 
 /**
  * redis配置类
@@ -24,23 +29,39 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author zcc ON 2018/3/19
  **/
 @Configuration
-@EnableCaching//开启注解
+@EnableCaching//开启缓存注解
 public class RedisConfig {
     public static StringRedisTemplate stringRedisTemplate;
 
     public static RedisTemplate<Object, Object> template;
 
+//    @Bean
+//    public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
+//        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+//
+//        //设置缓存过期时间 秒
+////        cacheManager.setDefaultExpiration(500);
+//
+//        //根据缓存的key 设置该key的缓存时间
+////        cacheManager.setExpires();
+//        /*RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
+//        // 多个缓存的名称,目前只定义了一个
+//        rcm.setCacheNames(Arrays.asList("thisredis"));
+//        return rcm;*/
+//        return cacheManager;
+//    }
+
     @Bean
-    public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
-        CacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        return cacheManager;
-        /*RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-        // 多个缓存的名称,目前只定义了一个
-        rcm.setCacheNames(Arrays.asList("thisredis"));
-        //设置缓存默认过期时间(秒)
-        rcm.setDefaultExpiration(600);
-        return rcm;*/
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(1)); // 设置缓存有效期一小时
+        return RedisCacheManager
+                .builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
+                .cacheDefaults(redisCacheConfiguration).build();
     }
+
+
+
     // 以下两种redisTemplate自由根据场景选择
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {

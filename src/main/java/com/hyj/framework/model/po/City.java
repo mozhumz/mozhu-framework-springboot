@@ -6,9 +6,7 @@ package com.hyj.framework.model.po;
  */
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -27,6 +25,7 @@ public class City implements Serializable {
      */
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
