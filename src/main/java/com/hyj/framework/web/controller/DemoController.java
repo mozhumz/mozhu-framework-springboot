@@ -41,6 +41,8 @@ public class DemoController {
 
         System.out.println(stringRedisTemplate.opsForValue().get("hyj"));
 
+        request.getSession().setAttribute("session1","sss");
+
         return "hh";
     }
 

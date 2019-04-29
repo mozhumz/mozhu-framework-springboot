@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResData handler(HttpServletRequest request, Exception e) {
+        e.printStackTrace();
         log.error("GlobalExceptionHandler err:" + e);
         return new ResData(ErrorInfo.SYS_ERR.code, ErrorInfo.SYS_ERR.desc);
     }

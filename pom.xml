@@ -124,7 +124,7 @@
         <!--session -->
         <dependency>
         <groupId>org.springframework.session</groupId>
-        <artifactId>spring-session-core</artifactId>
+        <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
         <!-- redis -->
